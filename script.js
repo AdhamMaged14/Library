@@ -1,15 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
   const myLibrary = [];
-  myLibrary.push(new Book("The Alchemist", "Paulo Coelho", 208, true));
-myLibrary.push(new Book("Clean Code", "Robert C. Martin", 464, false));
-myLibrary.push(new Book("The Hobbit", "J.R.R. Tolkien", 310, true));
-  displayBooks()
-  function Book(title, author, pages, read) {
+  
+class Book {
+  static #count = 0;
+  #id
+  constructor(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.#id = Book.#count++;
   }
+  get id() {
+    return this.#id;
+  }
+   
+}
+myLibrary.push(new Book("The Alchemist", "Paulo Coelho", 208, true));
+myLibrary.push(new Book("Clean Code", "Robert C. Martin", 464, false));
+myLibrary.push(new Book("The Hobbit", "J.R.R. Tolkien", 310, true));
+  displayBooks();
 
   function addBookToLibrary(title, author, pages, read) {
     const book = new Book(title, author, pages, read);
@@ -30,6 +40,7 @@ myLibrary.push(new Book("The Hobbit", "J.R.R. Tolkien", 310, true));
       <p>Author: ${book.author}</p>
       <p>Pages: ${book.pages}</p>
       <p>Read: ${book.read ? 'Yes' : 'No'}</p>
+      <p>ID: ${book.id}</p>
       <button class='toggle-read-btn'>${book.read ? 'Mark as Unread' : 'Mark as Read'}</button>
       <button class="delete-btn">Remove</button>
     `;
