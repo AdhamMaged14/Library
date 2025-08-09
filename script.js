@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const myLibrary = [];
+ 
   
 class Book {
   static #count = 0;
@@ -84,18 +85,29 @@ myLibrary.push(new Book("The Hobbit", "J.R.R. Tolkien", 310, true));
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const title = document.getElementById('title').value.trim();
-    const author = document.getElementById('author').value.trim();
-    const pages = document.getElementById('pages').value;
-    const read = document.getElementById('read').checked;
+    const titleInput = document.getElementById('title');
+    const authorInput = document.getElementById('author');
+    const pagesInput= document.getElementById('pages');
+    const readInput = document.getElementById('read');
 
-    if (title && author && pages) {
-      addBookToLibrary(title, author, pages, read);
-      displayBooks();
-      dialog.close();
-      form.reset();
-    }
-  });
+    if (titleInput.checkValidity() && authorInput.checkValidity() && pagesInput.checkValidity()) {
+    addBookToLibrary(
+      titleInput.value.trim(),
+      authorInput.value.trim(),
+      pagesInput.value,
+      readInput.checked
+    );
+    displayBooks();
+    dialog.close();
+    form.reset();
+  } else {
+  
+    if (!titleInput.checkValidity()) titleInput.reportValidity();
+    else if (!authorInput.checkValidity()) authorInput.reportValidity();
+    else if (!pagesInput.checkValidity()) pagesInput.reportValidity();
+  }
+});
+
 }); 
 
 
